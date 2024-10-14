@@ -1,8 +1,11 @@
 package br.com.picpay.adapters.output.exception;
 
+import br.com.picpay.application.domain.exception.ErrorGenericException;
 import br.com.picpay.application.domain.exception.NullValueException;
+import br.com.picpay.application.domain.exception.ValueUniqueException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +24,24 @@ public class GlobalException {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                exception.getMessage(),
+                http.getServletPath()));
+    }
+
+    @ExceptionHandler(ValueUniqueException.class)
+    public ResponseEntity<Map<String , Object>> handlerValueUniqueException(ValueUniqueException exception, HttpServletRequest http){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(buildErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                HttpStatus.CONFLICT.getReasonPhrase(),
+                exception.getMessage(),
+                http.getServletPath()));
+    }
+
+    @ExceptionHandler(ErrorGenericException.class)
+    public ResponseEntity<Map<String , Object>> handlerErrorGenericException(ErrorGenericException exception, HttpServletRequest http){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(buildErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
                 exception.getMessage(),
                 http.getServletPath()));
     }
