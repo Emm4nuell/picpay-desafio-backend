@@ -5,6 +5,7 @@ import br.com.picpay.adapters.input.controller.dto.RequestAccount;
 import br.com.picpay.adapters.input.controller.dto.ResponseAccount;
 import br.com.picpay.application.domain.model.AccountDomain;
 import br.com.picpay.application.port.in.ICreateAccountUseCase;
+import br.com.picpay.application.port.in.IDeleteAccountUseCase;
 import br.com.picpay.application.port.in.IFindByIdAccountUseCase;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class ApiController implements IApiController {
 
     private final ICreateAccountUseCase iCreateAccountUseCase;
     private final IFindByIdAccountUseCase iFindByIdAccountUseCase;
+    private final IDeleteAccountUseCase iDeleteAccountUseCase;
     private final ObjectMapper mapper;
 
     @Override
@@ -50,7 +52,8 @@ public class ApiController implements IApiController {
 
     @Override
     public ResponseEntity<Void> delete(Long id) {
-        return null;
+        iDeleteAccountUseCase.execute(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Override

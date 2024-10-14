@@ -1,5 +1,6 @@
 package br.com.picpay.adapters.output.exception;
 
+import br.com.picpay.application.domain.exception.AccountNotFoundException;
 import br.com.picpay.application.domain.exception.ErrorGenericException;
 import br.com.picpay.application.domain.exception.NullValueException;
 import br.com.picpay.application.domain.exception.ValueUniqueException;
@@ -42,6 +43,15 @@ public class GlobalException {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(buildErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                exception.getMessage(),
+                http.getServletPath()));
+    }
+
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity<Map<String , Object>> handlerAccountNotFoundException(AccountNotFoundException exception, HttpServletRequest http){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(buildErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
                 exception.getMessage(),
                 http.getServletPath()));
     }

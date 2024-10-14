@@ -7,7 +7,7 @@ import br.com.picpay.infrastructure.config.Usecase;
 public class IdNullValidator {
     public void validate(Long id){
         if (id == null){
-            throw new NullValueException("O valor fornecido ao pesquisar uma conta nao pode ser nulo");
+            throw new NullValueException("O ID fornecido nao pode ser nulo");
         }
     }
 }
