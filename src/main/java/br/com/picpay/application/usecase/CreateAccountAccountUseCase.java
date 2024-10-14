@@ -15,6 +15,7 @@ public class CreateAccountAccountUseCase implements ICreateAccountUseCase {
 
     @Override
     public AccountDomain execute(AccountDomain domain) {
+        domain = null;
         if (domain == null){
             throw new NullValueException("O valor fornecido ao criar uma conta nao pode ser nulo");
         }
