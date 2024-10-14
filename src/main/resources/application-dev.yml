@@ -3,3 +3,13 @@ server:
 spring:
   application:
     name: picpay
+  datasource:
+    url: jdbc:h2:mem:devdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /dev-h2-console
+
