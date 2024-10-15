@@ -3,10 +3,10 @@ package br.com.picpay.adapters.input.controller;
 import br.com.picpay.adapters.input.api.IApiController;
 import br.com.picpay.adapters.input.controller.dto.RequestAccount;
 import br.com.picpay.adapters.input.controller.dto.ResponseAccount;
+import br.com.picpay.adapters.input.controller.dto.ResponseAccountPage;
 import br.com.picpay.application.domain.model.AccountDomain;
-import br.com.picpay.application.port.in.ICreateAccountUseCase;
-import br.com.picpay.application.port.in.IDeleteAccountUseCase;
-import br.com.picpay.application.port.in.IFindByIdAccountUseCase;
+import br.com.picpay.application.domain.model.PageAccountDomain;
+import br.com.picpay.application.port.in.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +23,8 @@ public class ApiController implements IApiController {
     private final ICreateAccountUseCase iCreateAccountUseCase;
     private final IFindByIdAccountUseCase iFindByIdAccountUseCase;
     private final IDeleteAccountUseCase iDeleteAccountUseCase;
+    private final IUpdateAccountUseCase iUpdateAccountUseCase;
+    private final IFindAllAccountUseCase iFindAllAccountUseCase;
     private final ObjectMapper mapper;
 
     @Override
@@ -46,8 +47,18 @@ public class ApiController implements IApiController {
     }
 
     @Override
-    public ResponseEntity<List<ResponseAccount>> findAll() {
-        return null;
+    public ResponseEntity<ResponseAccountPage> findAll(int size, int page, String sort, String direction) {
+        var domain = PageAccountDomain
+                .builder()
+                .pages(page)
+                .size(size)
+                .sort(sort)
+                .direction(direction)
+                .build();
+
+        var listDomain = iFindAllAccountUseCase.execute(domain);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(mapper.convertValue(iFindAllAccountUseCase.execute(domain), ResponseAccountPage.class));
     }
 
     @Override
@@ -58,6 +69,8 @@ public class ApiController implements IApiController {
 
     @Override
     public ResponseEntity<ResponseAccount> update(Long id, RequestAccount request) {
-        return null;
+        var domain = mapper.convertValue(request, AccountDomain.class);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(mapper.convertValue(iUpdateAccountUseCase.execute(id,domain), ResponseAccount.class));
     }
 }
