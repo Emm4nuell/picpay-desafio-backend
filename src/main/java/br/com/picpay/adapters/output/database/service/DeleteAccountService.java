@@ -1,6 +1,7 @@
 package br.com.picpay.adapters.output.database.service;
 
 import br.com.picpay.adapters.output.database.repository.AccountRepository;
+import br.com.picpay.adapters.output.exception.ErrorGenericException;
 import br.com.picpay.application.port.out.IDeleteAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,10 @@ public class DeleteAccountService implements IDeleteAccountService {
     @Override
     @Transactional
     public void execute(Long id) {
-        accountRepository.deleteById(id);
+        try {
+            accountRepository.deleteById(id);
+        }catch (Exception ex){
+            throw new ErrorGenericException("Erro ao deletar a conta: " + ex.getMessage());
+        }
     }
 }

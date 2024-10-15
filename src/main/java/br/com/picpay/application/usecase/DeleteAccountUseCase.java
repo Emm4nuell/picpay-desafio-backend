@@ -1,6 +1,5 @@
 package br.com.picpay.application.usecase;
 
-import br.com.picpay.application.domain.exception.ErrorGenericException;
 import br.com.picpay.application.port.in.IDeleteAccountUseCase;
 import br.com.picpay.application.port.in.IFindByIdAccountUseCase;
 import br.com.picpay.application.port.out.IDeleteAccountService;
@@ -21,10 +20,6 @@ public class DeleteAccountUseCase implements IDeleteAccountUseCase {
         idNullValidator.validate(id);
         iFindByIdAccountUseCase.execute(id);
 
-        try {
-            iDeleteAccountService.execute(id);
-        }catch (Exception ex){
-            throw new ErrorGenericException("Erro ao deletar a conta: " + ex.getMessage());
-        }
+        iDeleteAccountService.execute(id);
     }
 }

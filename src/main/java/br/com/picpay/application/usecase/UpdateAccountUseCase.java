@@ -1,6 +1,5 @@
 package br.com.picpay.application.usecase;
 
-import br.com.picpay.application.domain.exception.ErrorGenericException;
 import br.com.picpay.application.domain.model.AccountDomain;
 import br.com.picpay.application.port.in.IFindByIdAccountUseCase;
 import br.com.picpay.application.port.in.IUpdateAccountUseCase;
@@ -24,11 +23,7 @@ public class UpdateAccountUseCase implements IUpdateAccountUseCase {
         idNullValidator.validate(id);
         accountValidator.validate(domain);
         iFindByIdAccountUseCase.execute(id);
-        try {
-            domain.setId(id);
-            return iUpdateAccountService.execute(domain);
-        }catch (Exception ex){
-            throw new ErrorGenericException("Erro ao atualizar a conta." + ex.getMessage());
-        }
+
+        return iUpdateAccountService.execute(domain);
     }
 }

@@ -1,4 +1,4 @@
-package br.com.picpay.application.domain.exception;
+package br.com.picpay.adapters.output.exception;
 
 public class ErrorGenericException extends RuntimeException {
     public ErrorGenericException(String message) {

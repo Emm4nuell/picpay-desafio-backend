@@ -1,12 +1,9 @@
 package br.com.picpay.adapters.output.exception;
 
 import br.com.picpay.application.domain.exception.AccountNotFoundException;
-import br.com.picpay.application.domain.exception.ErrorGenericException;
 import br.com.picpay.application.domain.exception.NullValueException;
-import br.com.picpay.application.domain.exception.ValueUniqueException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
