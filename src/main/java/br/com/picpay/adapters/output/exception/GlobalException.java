@@ -1,5 +1,6 @@
 package br.com.picpay.adapters.output.exception;
 
+import br.com.picpay.adapters.output.sendmessage.ISendLogService;
 import br.com.picpay.adapters.output.sendmessage.SendLogService;
 import br.com.picpay.application.domain.exception.AccountNotFoundException;
 import br.com.picpay.application.domain.exception.NullValueException;
@@ -20,7 +21,7 @@ import java.util.Map;
 @Slf4j
 public class GlobalException {
 
-    private final SendLogService sendLogService;
+    private final ISendLogService iSendLogService;
 
     @ExceptionHandler(NullValueException.class)
     public ResponseEntity<Map<String, Object>> handlerNullValueException(NullValueException exception, HttpServletRequest http){
@@ -68,7 +69,7 @@ public class GlobalException {
         config.put("error", error);
         config.put("path", path);
 
-        sendLogService.send(config);
+        iSendLogService.send(config);
 
         return config;
     }
