@@ -14,7 +14,7 @@ public class LogMessageConvertJson {
 
     private final ObjectMapper mapper;
 
-    public String converter(Map<String, Object> message){
+    public String converter(Object message){
         try {
             return mapper.writeValueAsString(message);
         } catch (JsonProcessingException e) {
