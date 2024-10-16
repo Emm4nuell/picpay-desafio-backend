@@ -4,8 +4,10 @@ import br.com.picpay.application.domain.exception.NullValueException;
 import br.com.picpay.application.domain.model.AccountDomain;
 import br.com.picpay.infrastructure.config.Usecase;
 import io.micrometer.common.util.StringUtils;
+import lombok.RequiredArgsConstructor;
 
 @Usecase
+@RequiredArgsConstructor
 public class AccountValidator {
     public void validate(AccountDomain domain){
         if (domain == null){

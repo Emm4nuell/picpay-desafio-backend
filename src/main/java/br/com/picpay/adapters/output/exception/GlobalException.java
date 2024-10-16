@@ -1,8 +1,10 @@
 package br.com.picpay.adapters.output.exception;
 
+import br.com.picpay.adapters.output.sendmessage.SendLogService;
 import br.com.picpay.application.domain.exception.AccountNotFoundException;
 import br.com.picpay.application.domain.exception.NullValueException;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
+@RequiredArgsConstructor
 @Slf4j
 public class GlobalException {
+
+    private final SendLogService sendLogService;
 
     @ExceptionHandler(NullValueException.class)
     public ResponseEntity<Map<String, Object>> handlerNullValueException(NullValueException exception, HttpServletRequest http){
@@ -62,6 +67,9 @@ public class GlobalException {
         config.put("message", message);
         config.put("error", error);
         config.put("path", path);
+
+        sendLogService.send(config);
+
         return config;
     }
 }

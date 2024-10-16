@@ -13,3 +13,6 @@ spring:
       enabled: true
       path: /dev-h2-console
 
+kafka:
+  producer:
+    topic-error: topic-error
