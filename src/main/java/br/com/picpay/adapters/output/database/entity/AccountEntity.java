@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -20,5 +22,9 @@ public class AccountEntity {
     private String email;
     @Column(unique = true)
     private String cpf;
-    private String password;
+    private BigDecimal balance;
+    private String accounttype;
+    private String account;
+    @Column(unique = true)
+    private String agency;
 }
