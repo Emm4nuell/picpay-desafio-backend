@@ -1,8 +1,6 @@
 package br.com.picpay.adapters.input.api;
 
-import br.com.picpay.adapters.input.controller.dto.RequestAccount;
-import br.com.picpay.adapters.input.controller.dto.ResponseAccount;
-import br.com.picpay.adapters.input.controller.dto.ResponseAccountPage;
+import br.com.picpay.adapters.input.controller.dto.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,4 +24,7 @@ public interface IApiController {
 
     @PutMapping("update/{id}")
     ResponseEntity<ResponseAccount> update(@PathVariable Long id, @RequestBody RequestAccount request);
+
+    @PutMapping("deposit")
+    ResponseEntity<ResponseAccountDeposit> deposit(@RequestBody RequestAccountDeposit request);
 }

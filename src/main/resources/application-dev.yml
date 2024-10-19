@@ -13,11 +13,7 @@ spring:
       enabled: true
       path: /dev-h2-console
 
-aws:
-  access-key:
-  secret-key:
-  region: us-east-1
-  topic-arn: 
+
 
 kafka:
   producer:

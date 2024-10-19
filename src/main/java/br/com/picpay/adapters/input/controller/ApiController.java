@@ -1,9 +1,7 @@
 package br.com.picpay.adapters.input.controller;
 
 import br.com.picpay.adapters.input.api.IApiController;
-import br.com.picpay.adapters.input.controller.dto.RequestAccount;
-import br.com.picpay.adapters.input.controller.dto.ResponseAccount;
-import br.com.picpay.adapters.input.controller.dto.ResponseAccountPage;
+import br.com.picpay.adapters.input.controller.dto.*;
 import br.com.picpay.application.domain.model.AccountDomain;
 import br.com.picpay.application.domain.model.PageAccountDomain;
 import br.com.picpay.application.port.in.*;
@@ -25,6 +23,7 @@ public class ApiController implements IApiController {
     private final IDeleteAccountUseCase iDeleteAccountUseCase;
     private final IUpdateAccountUseCase iUpdateAccountUseCase;
     private final IFindAllAccountUseCase iFindAllAccountUseCase;
+    private final IFindByDepositAccountUseCase iFindByDepositAccountUseCase;
     private final ObjectMapper mapper;
 
     @Override
@@ -72,5 +71,18 @@ public class ApiController implements IApiController {
         var domain = mapper.convertValue(request, AccountDomain.class);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(mapper.convertValue(iUpdateAccountUseCase.execute(id,domain), ResponseAccount.class));
+    }
+
+    @Override
+    public ResponseEntity<ResponseAccountDeposit> deposit(RequestAccountDeposit request) {
+        var domain = iFindByDepositAccountUseCase.execute(
+                AccountDomain
+                        .builder()
+                        .cpf(request.getCpf())
+                        .agency(request.getAgency())
+                        .account(request.getAccount())
+                        .balance(request.getValue())
+                        .build());
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.convertValue(domain, ResponseAccountDeposit.class));
     }
 }
