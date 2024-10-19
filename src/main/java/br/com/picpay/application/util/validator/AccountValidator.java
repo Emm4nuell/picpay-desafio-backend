@@ -10,10 +10,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AccountValidator {
     public void validate(AccountDomain domain){
-        if (domain == null){
-            throw new NullValueException("O valor fornecido ao criar uma conta nao pode ser nulo");
-        }
-
         if (StringUtils.isBlank(domain.getCpf()) || StringUtils.isBlank(domain.getEmail())){
             throw new NullValueException("O Email ou Cpf nao pode ser nulo.");
         }

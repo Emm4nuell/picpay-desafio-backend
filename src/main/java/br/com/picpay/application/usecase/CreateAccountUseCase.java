@@ -6,6 +6,7 @@ import br.com.picpay.application.port.out.ICreateAccountService;
 import br.com.picpay.application.port.out.IFindByAccountService;
 import br.com.picpay.application.port.out.ISendMessageSuccessService;
 import br.com.picpay.application.util.validator.AccountValidator;
+import br.com.picpay.application.util.validator.ValueNullValidator;
 import br.com.picpay.infrastructure.config.Usecase;
 import lombok.RequiredArgsConstructor;
 
@@ -19,10 +20,12 @@ public class CreateAccountUseCase implements ICreateAccountUseCase {
     private final ICreateAccountService iCreateAccountService;
     private final ISendMessageSuccessService successService;
     private final AccountValidator accountValidator;
+    private final ValueNullValidator valueNullValidator;
     private final IFindByAccountService iFindByAccountService;
 
     @Override
     public AccountDomain execute(AccountDomain domain) {
+        valueNullValidator.validate(domain);
         accountValidator.validate(domain);
         String accountRandom;
 
